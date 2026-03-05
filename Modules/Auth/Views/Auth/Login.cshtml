@@ -1,0 +1,26 @@
+﻿@model EmployeeManagementSystem.Modules.Auth.ViewModels.LoginViewModel
+
+<h1>Login</h1>
+
+<form asp-controller="Auth" asp-action="Login" method="post">
+
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red">@ViewBag.Error</p>
+    }
+
+    <div>
+        <label>Email</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input asp-for="Password" type="password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+
+    <button type="submit">Login</button>
+
+</form>
