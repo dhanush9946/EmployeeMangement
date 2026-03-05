@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementSystem.Modules.Employee.Services;
+using EmployeeManagementSystem.Modules.Employee.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeManagementSystem.Modules.Employee.Controllers
@@ -21,6 +22,18 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
         public IActionResult Create()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateEmployeeViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _employeeService.CreateEmployeeAsync(model);
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
     }
 }
