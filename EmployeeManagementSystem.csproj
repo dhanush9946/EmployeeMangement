@@ -18,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.3" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
   </ItemGroup>
 
@@ -35,7 +36,6 @@
     <Folder Include="Modules\Leave\Repositories\" />
     <Folder Include="Modules\Leave\Services\" />
     <Folder Include="Modules\Leave\Views\Leave\" />
-    <Folder Include="Middleware\" />
     <Folder Include="Logging\" />
     <Folder Include="Caching\" />
   </ItemGroup>

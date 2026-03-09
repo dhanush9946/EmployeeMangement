@@ -8,10 +8,13 @@ namespace EmployeeManagementSystem.Modules.Auth.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService authService;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService,
+                              ILogger<AuthController> logger)
         {
             this.authService = authService;
+            _logger = logger;
         }
 
         public IActionResult Login()
@@ -22,9 +25,11 @@ namespace EmployeeManagementSystem.Modules.Auth.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            _logger.LogInformation("Login attempt by email {Email}", model.Email);
             
             if (!ModelState.IsValid)
             {
+                _logger.LogWarning("Invalid Login Attempt for email {Email}", model.Email);
                 return View(model);
             }
 
@@ -39,7 +44,7 @@ namespace EmployeeManagementSystem.Modules.Auth.Controllers
             HttpContext.Session.SetString("UserName", user.Name);
             HttpContext.Session.SetString("UserRole", user.Role);
 
-            Console.WriteLine("Login successful");
+            _logger.LogInformation("User {Email} login successfullly", model.Email);
 
             return RedirectToAction("Index", "Dashboard");
         }
