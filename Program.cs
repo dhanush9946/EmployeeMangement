@@ -38,8 +38,17 @@ builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 // Session
-builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = "localhost:6379";
+    options.InstanceName = "EmployeeCache";
+});
+builder.Services.AddMemoryCache();
+//builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession();
+
+
 
 var app = builder.Build();
 

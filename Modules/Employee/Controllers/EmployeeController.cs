@@ -1,6 +1,8 @@
 ﻿using EmployeeManagementSystem.Modules.Employee.Services;
 using EmployeeManagementSystem.Modules.Employee.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace EmployeeManagementSystem.Modules.Employee.Controllers
 {
@@ -9,17 +11,33 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly ILogger<EmployeeController> _logger;
 
+        private readonly IMemoryCache _cache;
+
+        private readonly IDistributedCache _cache2;
+
         public EmployeeController(IEmployeeService employeeService,
-                                  ILogger<EmployeeController> logger)
+                                  ILogger<EmployeeController> logger,
+                                  IMemoryCache cache,
+                                  IDistributedCache cache2)
         {
             _employeeService = employeeService;
             _logger = logger;
+            _cache = cache;
+            _cache2 = cache2;
+
+            _cache.Set("EmployeeCount", 100);
+
+            
+
         }
+        
 
         public async Task<IActionResult> Index()
         {
+            await _cache2.SetStringAsync("EmployeeCount", "150");
             var employees = await _employeeService.GetAllEmployeesAsync();
             return View(employees);
+
         }
 
         public IActionResult Create()
@@ -63,5 +81,13 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
 
             return View();
         }
+
+
+       public async Task<IActionResult> EmployeeCount()
+        {
+            var count = await _cache2.GetStringAsync("EmployeeCount");
+            return View((object)count);
+        }
+        
     }
 }
