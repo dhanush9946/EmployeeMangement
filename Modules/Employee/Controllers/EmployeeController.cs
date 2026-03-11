@@ -83,11 +83,17 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
         }
 
 
-       public async Task<IActionResult> EmployeeCount()
+        public async Task<IActionResult> EmployeeCount()
         {
             var count = await _cache2.GetStringAsync("EmployeeCount");
-            return View((object)count);
+
+            if (count == null)
+            {
+                count = "No value in Redis";
+            }
+
+            return Content($"Employee Count from Redis: {count}");
         }
-        
+
     }
 }
