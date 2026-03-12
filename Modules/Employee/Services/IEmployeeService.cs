@@ -7,5 +7,7 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
     {
         Task CreateEmployeeAsync(CreateEmployeeViewModel model);
         Task<List<Data.Models.Employee>> GetAllEmployeesAsync();
+        Task<Data.Models.Employee?> GetEmployeeByIdAsync(int id);
+        Task UpdateEmployeeAsync(Data.Models.Employee employee);
     }
 }

@@ -26,5 +26,18 @@ namespace EmployeeManagementSystem.Modules.Employee.Repository
                 .ToListAsync();
         }
 
+        public async Task<EmployeeEntity?> GetEmployeeByIdAsync(int id)
+        {
+            return await _context.Employees
+                       .Include(e => e.User)
+                       .FirstOrDefaultAsync(e => e.Id == id);
+        }
+
+        public async Task UpdateEmployeeAsync(EmployeeEntity employee)
+        {
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

@@ -13,17 +13,18 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
 
         private readonly IMemoryCache _cache;
 
-        private readonly IDistributedCache _cache2;
+        //private readonly IDistributedCache _cache2;
 
         public EmployeeController(IEmployeeService employeeService,
                                   ILogger<EmployeeController> logger,
-                                  IMemoryCache cache,
-                                  IDistributedCache cache2)
+                                  IMemoryCache cache
+                                  //IDistributedCache cache2
+                                  )
         {
             _employeeService = employeeService;
             _logger = logger;
             _cache = cache;
-            _cache2 = cache2;
+            //_cache2 = cache2;
 
             _cache.Set("EmployeeCount", 100);
 
@@ -34,7 +35,7 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
 
         public async Task<IActionResult> Index()
         {
-            await _cache2.SetStringAsync("EmployeeCount", "150");
+           
             var employees = await _employeeService.GetAllEmployeesAsync();
             return View(employees);
 
@@ -68,32 +69,42 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
             }
             _logger.LogWarning("Employee creation failed due to invalid model.");
             return View(model);
-
-
         }
 
-        public IActionResult TestError()
+        public async Task<IActionResult> Details(int id)
         {
-            int x = 10;
-            int y = 0;
-
-            int result = x / y; // Exception
-
-            return View();
-        }
-
-
-        public async Task<IActionResult> EmployeeCount()
-        {
-            var count = await _cache2.GetStringAsync("EmployeeCount");
-
-            if (count == null)
+            var employee = await _employeeService.GetEmployeeByIdAsync(id);
+            if (employee == null)
             {
-                count = "No value in Redis";
+                return NotFound();
             }
-
-            return Content($"Employee Count from Redis: {count}");
+            return View(employee);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var employee = await _employeeService.GetEmployeeByIdAsync(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Data.Models.Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                await _employeeService.UpdateEmployeeAsync(employee);
+                return RedirectToAction("Index");
+            }
+            return View(employee);
+        }
+
+       
+
+
 
     }
 }

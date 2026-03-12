@@ -34,5 +34,15 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
         {
             return await _employeeRepository.GetAllEmployeesAsync();
         }
+
+        public async Task<Data.Models.Employee?> GetEmployeeByIdAsync(int id)
+        {
+            return await _employeeRepository.GetEmployeeByIdAsync(id);
+        }
+
+        public async Task UpdateEmployeeAsync(Data.Models.Employee employee)
+        {
+            await _employeeRepository.UpdateEmployeeAsync(employee);
+        }
     }
 }

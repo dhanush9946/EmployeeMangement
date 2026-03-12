@@ -1,0 +1,14 @@
+﻿@model EmployeeManagementSystem.Data.Models.Employee;
+
+<h1>Employee Details</h1>
+
+<div>
+    <p><b>Employee Code:</b> @Model.EmployeeCode</p>
+    <p><b>Department:</b> @Model.Department</p>
+    <p><b>Designation:</b> @Model.Designation</p>
+    <p><b>Phone:</b> @Model.Phone</p>
+    <p><b>Salary:</b> @Model.Salary</p>
+    <p><b>Date Of Joining:</b> @Model.DateOfJoining</p>
+</div>
+
+<a asp-action="Index">Back</a>

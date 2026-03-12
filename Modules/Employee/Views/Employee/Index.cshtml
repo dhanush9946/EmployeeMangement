@@ -22,6 +22,14 @@
                 <td>@emp.Department</td>
                 <td>@emp.Designation</td>
                 <td>@emp.Phone</td>
+                <td>
+                   <a asp-action="Details" asp-route-id="@emp.Id">Details</a>
+
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@emp.Id">Edit</a>
+                </td>
             </tr>
         }
     </tbody>

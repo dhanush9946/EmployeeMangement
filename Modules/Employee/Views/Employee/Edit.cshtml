@@ -1,0 +1,39 @@
+﻿@model EmployeeManagementSystem.Data.Models.Employee
+
+<h1>Edit Employee</h1>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div>
+        <label>Employee Code</label>
+        <input asp-for="EmployeeCode"/>
+    </div>
+
+    <div>
+        <label>Department</label>
+        <input asp-for="Department" />
+    </div>
+
+    <div>
+        <label>Designation</label>
+        <input asp-for="Designation" />
+    </div>
+
+    <div>
+        <label>Phone</label>
+        <input asp-for="Phone" />
+    </div>
+
+    <div>
+        <label>Salary</label>
+        <input asp-for="Salary" />
+    </div>
+
+    <div>
+        <label>Date Of Joining</label>
+        <input asp-for="DateOfJoining" type="date" />
+    </div>
+
+    <button type="submit">Update</button>
+</form>

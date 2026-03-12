@@ -6,5 +6,7 @@ namespace EmployeeManagementSystem.Modules.Employee.Repository
     {
         Task AddEmployeeAsync(EmployeeEntity employee);
         Task<List<EmployeeEntity>> GetAllEmployeesAsync();
+        Task<EmployeeEntity?> GetEmployeeByIdAsync(int id);
+        Task UpdateEmployeeAsync(EmployeeEntity employee);
     }
 }
