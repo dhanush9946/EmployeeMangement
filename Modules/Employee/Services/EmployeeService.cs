@@ -44,5 +44,10 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
         {
             await _employeeRepository.UpdateEmployeeAsync(employee);
         }
+
+        public async Task DeleteEmployeeAsync(int id)
+        {
+            await _employeeRepository.DeleteEmployeeAsync(id);
+        }
     }
 }

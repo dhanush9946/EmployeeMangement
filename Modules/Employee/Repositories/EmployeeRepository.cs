@@ -23,6 +23,7 @@ namespace EmployeeManagementSystem.Modules.Employee.Repository
         {
             return await _context.Employees
                 .Include(e => e.User)
+                .Where(e=>e.IsActive)
                 .ToListAsync();
         }
 
@@ -37,6 +38,17 @@ namespace EmployeeManagementSystem.Modules.Employee.Repository
         {
             _context.Employees.Update(employee);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteEmployeeAsync(int id)
+        {
+            var emp = await _context.Employees.FindAsync(id);
+            if(emp != null)
+            {
+                emp.IsActive = false;
+                _context.Employees.Update(emp);
+                await _context.SaveChangesAsync();
+            }
         }
 
     }

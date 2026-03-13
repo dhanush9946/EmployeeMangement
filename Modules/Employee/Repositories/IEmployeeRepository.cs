@@ -8,5 +8,6 @@ namespace EmployeeManagementSystem.Modules.Employee.Repository
         Task<List<EmployeeEntity>> GetAllEmployeesAsync();
         Task<EmployeeEntity?> GetEmployeeByIdAsync(int id);
         Task UpdateEmployeeAsync(EmployeeEntity employee);
+        Task DeleteEmployeeAsync(int id);
     }
 }

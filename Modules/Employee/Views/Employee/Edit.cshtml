@@ -2,8 +2,11 @@
 
 <h1>Edit Employee</h1>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" asp-route-id="@Model.Id" method="post">
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="CreatedAt" />
+    <input type="hidden" asp-for="IsActive" />
 
     <div>
         <label>Employee Code</label>

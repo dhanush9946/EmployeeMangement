@@ -72,6 +72,11 @@ public partial class EmployeeManagementDbContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValue(true);
         });
 
+        modelBuilder.Entity<Employee>()
+            .HasQueryFilter(e => e.IsActive);
+
+
+
         OnModelCreatingPartial(modelBuilder);
     }
 

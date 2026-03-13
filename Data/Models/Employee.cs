@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace EmployeeManagementSystem.Data.Models;
 
@@ -32,7 +33,7 @@ public partial class Employee
 
     public DateOnly DateOfJoining { get; set; }
 
-    public bool IsActive { get; set; }
+    public bool IsActive { get; set; } = true;
 
     [Column(TypeName = "datetime")]
     public DateTime CreatedAt { get; set; }
@@ -45,5 +46,8 @@ public partial class Employee
 
     [ForeignKey("UserId")]
     [InverseProperty("Employees")]
+    [ValidateNever]
     public virtual User User { get; set; } = null!;
+    
+   
 }

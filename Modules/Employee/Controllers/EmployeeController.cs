@@ -99,11 +99,37 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
                 await _employeeService.UpdateEmployeeAsync(employee);
                 return RedirectToAction("Index");
             }
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var error in ModelState.Values)
+                {
+                    foreach (var subError in error.Errors)
+                    {
+                        Console.WriteLine(subError.ErrorMessage);
+                    }
+                }
+            }
             return View(employee);
         }
 
        
+        public async Task<IActionResult> Delete(int id)
+        {
+            var emp = await _employeeService.GetEmployeeByIdAsync(id);
+            if(emp == null)
+            {
+                return NotFound();
+            }
+            return View(emp);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await _employeeService.DeleteEmployeeAsync(id);
+            return RedirectToAction("Index");
+        }
 
 
     }
