@@ -14,12 +14,16 @@ namespace EmployeeManagementSystem.Modules.Auth.Repositories
         }
 
         public async Task<User?> GetUserByEmailAsync(string email)
-        {
-
-            
+        {  
             return await context.Users
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
-        
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await context.Users.ToListAsync();
+        }
+
+
     }
 }
