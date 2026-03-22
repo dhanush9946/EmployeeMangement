@@ -1,9 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeManagementSystem.Modules.Employee.ViewModels
 {
     public class CreateEmployeeViewModel
     {
+        [Required]
         public int UserId { get; set; }
 
         [Required]
@@ -22,6 +24,7 @@ namespace EmployeeManagementSystem.Modules.Employee.ViewModels
         [Required]
         public DateOnly DateOfJoining { get; set; }
 
-        public bool IsActive { get; set; }
+        //Dropdown data
+        public List<SelectListItem> Users { get; set; } = new();
     }
 }

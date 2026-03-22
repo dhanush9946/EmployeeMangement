@@ -1,4 +1,5 @@
-﻿using EmployeeEntity = EmployeeManagementSystem.Data.Models.Employee;
+﻿using EmployeeManagementSystem.Data.Models;
+using EmployeeEntity = EmployeeManagementSystem.Data.Models.Employee;
 
 namespace EmployeeManagementSystem.Modules.Employee.Repository
 {
@@ -9,5 +10,6 @@ namespace EmployeeManagementSystem.Modules.Employee.Repository
         Task<EmployeeEntity?> GetEmployeeByIdAsync(int id);
         Task UpdateEmployeeAsync(EmployeeEntity employee);
         Task DeleteEmployeeAsync(int id);
+        
     }
 }

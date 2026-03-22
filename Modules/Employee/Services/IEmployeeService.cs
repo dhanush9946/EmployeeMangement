@@ -10,5 +10,8 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
         Task<Data.Models.Employee?> GetEmployeeByIdAsync(int id);
         Task UpdateEmployeeAsync(Data.Models.Employee employee);
         Task DeleteEmployeeAsync(int id);
+
+
+        Task<List<User>> GetAllUsersAsync();
     }
 }

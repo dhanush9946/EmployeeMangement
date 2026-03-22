@@ -1,4 +1,6 @@
-﻿using EmployeeManagementSystem.Modules.Employee.Repository;
+﻿using EmployeeManagementSystem.Data.Models;
+using EmployeeManagementSystem.Modules.Auth.Repositories;
+using EmployeeManagementSystem.Modules.Employee.Repository;
 using EmployeeManagementSystem.Modules.Employee.ViewModels;
 using EmployeeEntity = EmployeeManagementSystem.Data.Models.Employee;
 
@@ -7,10 +9,14 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IUserRepository userRepository;
 
-        public EmployeeService(IEmployeeRepository employeeRepository)
+        public EmployeeService(IEmployeeRepository employeeRepository,
+                               IUserRepository _userRepository
+            )
         {
             _employeeRepository = employeeRepository;
+            userRepository = _userRepository;
         }
 
         public async Task CreateEmployeeAsync(CreateEmployeeViewModel model)
@@ -48,6 +54,11 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
         public async Task DeleteEmployeeAsync(int id)
         {
             await _employeeRepository.DeleteEmployeeAsync(id);
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await userRepository.GetAllUsersAsync();
         }
     }
 }
