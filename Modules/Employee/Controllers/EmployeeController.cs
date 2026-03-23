@@ -1,6 +1,7 @@
 ﻿using EmployeeManagementSystem.Modules.Employee.Services;
 using EmployeeManagementSystem.Modules.Employee.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Caching.Memory;
 
@@ -41,34 +42,41 @@ namespace EmployeeManagementSystem.Modules.Employee.Controllers
 
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var users = await _employeeService.GetAllUsersAsync();
+
+            var model = new CreateEmployeeViewModel
+            {
+                Users = users.Select(u => new SelectListItem
+                {
+                    Value = u.Id.ToString(),
+                    Text = u.Email
+                }).ToList()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Create(CreateEmployeeViewModel model)
         {
-            _logger.LogInformation("Employee creation started");
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
+                var users = await _employeeService.GetAllUsersAsync();
+
+                model.Users = users.Select(u => new SelectListItem
                 {
-                    await _employeeService.CreateEmployeeAsync(model);
+                    Value = u.Id.ToString(),
+                    Text = u.Email
+                }).ToList();
 
-                    _logger.LogInformation("Employee created successfully with EmployeeCode {EmployeeCode}", model.EmployeeCode);
-
-                    return RedirectToAction("Index");
-                }
-                catch(Exception ex)
-                {
-                    _logger.LogError(ex, "Error occured while creating the employee");
-
-                    return View(model);
-                }
+                return View(model);
             }
-            _logger.LogWarning("Employee creation failed due to invalid model.");
-            return View(model);
+
+            await _employeeService.CreateEmployeeAsync(model);
+            return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Details(int id)

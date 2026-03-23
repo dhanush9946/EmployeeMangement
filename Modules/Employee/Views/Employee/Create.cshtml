@@ -1,20 +1,20 @@
-﻿@model EmployeeManagementSystem.Modules.Employee.ViewModels.CreateEmployeeViewModel
+﻿@* @model EmployeeManagementSystem.Modules.Employee.ViewModels.CreateEmployeeViewModel
 
 <h2>Create Employee</h2>
 
 <form asp-action="Create" method="post">
 
-    <div asp-validation-summary="All" style="color:red"></div>
-
+    
     <div>
-        <label>User Id</label>
-        <input asp-for="UserId" />
+        <label>User</label>
+        <select asp-for="UserId" asp-items="Model.Users">
+            <option value="">-- Select User --</option>
+        </select>
     </div>
 
     <div>
         <label>Employee Code</label>
         <input asp-for="EmployeeCode" />
-        <span asp-validation-for="EmployeeCode" style="color:red"></span>
     </div>
 
     <div>
@@ -44,4 +44,84 @@
 
     <button type="submit">Create Employee</button>
 
-</form>
+</form> *@
+
+
+
+
+
+
+
+
+
+
+@model EmployeeManagementSystem.Modules.Employee.ViewModels.CreateEmployeeViewModel
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h4>Create Employee</h4>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Create" method="post">
+
+                <!-- User Dropdown -->
+                <div class="mb-3">
+                    <label class="form-label">User</label>
+                    <select asp-for="UserId" asp-items="Model.Users" class="form-select">
+                        <option value="">-- Select User --</option>
+                    </select>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+
+                <!-- Employee Code -->
+                <div class="mb-3">
+                    <label class="form-label">Employee Code</label>
+                    <input asp-for="EmployeeCode" class="form-control" />
+                    <span asp-validation-for="EmployeeCode" class="text-danger"></span>
+                </div>
+
+                <!-- Department -->
+                <div class="mb-3">
+                    <label class="form-label">Department</label>
+                    <input asp-for="Department" class="form-control" />
+                    <span asp-validation-for="Department" class="text-danger"></span>
+                </div>
+
+                <!-- Designation -->
+                <div class="mb-3">
+                    <label class="form-label">Designation</label>
+                    <input asp-for="Designation" class="form-control" />
+                    <span asp-validation-for="Designation" class="text-danger"></span>
+                </div>
+
+                <!-- Phone -->
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input asp-for="Phone" class="form-control" />
+                </div>
+
+                <!-- Salary -->
+                <div class="mb-3">
+                    <label class="form-label">Salary</label>
+                    <input asp-for="Salary" class="form-control" />
+                </div>
+
+                <!-- Date -->
+                <div class="mb-3">
+                    <label class="form-label">Date Of Joining</label>
+                    <input asp-for="DateOfJoining" type="date" class="form-control" />
+                    <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a asp-action="Index" class="btn btn-secondary">Back</a>
+                    <button type="submit" class="btn btn-success">Create Employee</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

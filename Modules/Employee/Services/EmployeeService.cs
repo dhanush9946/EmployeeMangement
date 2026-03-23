@@ -30,7 +30,7 @@ namespace EmployeeManagementSystem.Modules.Employee.Services
                 Phone = model.Phone,
                 Salary = model.Salary,
                 DateOfJoining = model.DateOfJoining,
-                IsActive = model.IsActive
+                IsActive = true
             };
 
             await _employeeRepository.AddEmployeeAsync(employee);
