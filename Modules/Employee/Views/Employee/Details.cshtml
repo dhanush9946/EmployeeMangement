@@ -1,14 +1,118 @@
-﻿@model EmployeeManagementSystem.Data.Models.Employee;
+﻿@{
+    Layout = "_Layout";
+}
 
-<h1>Employee Details</h1>
+@model EmployeeManagementSystem.Data.Models.Employee
 
-<div>
-    <p><b>Employee Code:</b> @Model.EmployeeCode</p>
-    <p><b>Department:</b> @Model.Department</p>
-    <p><b>Designation:</b> @Model.Designation</p>
-    <p><b>Phone:</b> @Model.Phone</p>
-    <p><b>Salary:</b> @Model.Salary</p>
-    <p><b>Date Of Joining:</b> @Model.DateOfJoining</p>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-zinc-100 py-12 px-6 font-sans">
+
+    <div class="max-w-2xl mx-auto">
+
+        <a asp-action="Index"
+           class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium mb-8 transition-colors">
+            ← Back to Employee List
+        </a>
+
+        <div class="bg-white rounded-3xl shadow-2xl shadow-slate-300/60 overflow-hidden">
+
+            <!-- Header -->
+            <div class="h-48 bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 relative">
+                <div class="absolute -bottom-12 left-1/2 -translate-x-1/2">
+                    <div class="w-28 h-28 bg-white rounded-3xl p-2 shadow-xl">
+                        <div class="w-full h-full bg-gradient-to-br from-indigo-500 to-blue-500 rounded-2xl flex items-center justify-center text-6xl">
+                            👤
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-20 pb-10 px-10">
+
+                <div class="text-center mb-10">
+                    <h1 class="text-4xl font-semibold tracking-tight text-gray-900">
+                        @Model.EmployeeCode
+                    </h1>
+                    <p class="text-xl text-gray-500 mt-1">@Model.Designation</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+                    <div class="group bg-zinc-50 hover:bg-white border border-transparent hover:border-indigo-100 rounded-2xl p-6 transition-all duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🏢</div>
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 tracking-widest">DEPARTMENT</p>
+                                <p class="text-lg font-semibold text-gray-800">@Model.Department</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group bg-zinc-50 hover:bg-white border border-transparent hover:border-indigo-100 rounded-2xl p-6 transition-all duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📞</div>
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 tracking-widest">PHONE</p>
+                                <p class="text-lg font-semibold text-gray-800">@Model.Phone</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group bg-zinc-50 hover:bg-white border border-transparent hover:border-indigo-100 rounded-2xl p-6 transition-all duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">💰</div>
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 tracking-widest">SALARY</p>
+                                <p class="text-lg font-semibold text-gray-800">₹ @Model.Salary?.ToString("N0")</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="group bg-zinc-50 hover:bg-white border border-transparent hover:border-indigo-100 rounded-2xl p-6 transition-all duration-300">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">📅</div>
+                            <div>
+                                <p class="text-xs font-medium text-gray-500 tracking-widest">DATE OF JOINING</p>
+                                <p class="text-lg font-semibold text-gray-800">
+                                    @(Model.DateOfJoining.ToString("dd MMMM yyyy") ?? "—")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="mt-12 flex justify-center gap-4">
+                    <button onclick="window.history.back()"
+                            class="px-8 py-3.5 border border-gray-300 hover:border-gray-400 rounded-2xl font-medium text-gray-700 transition-all active:scale-95">
+                        Close
+                    </button>
+
+                    <a asp-action="Edit" asp-route-id="@Model.Id"
+                       class="px-8 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-medium transition-all active:scale-95 flex items-center gap-2">
+                        ✏️ Edit Employee
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-xs text-gray-400 mt-8">
+            Employee Management System • Secure & Confidential
+        </p>
+    </div>
 </div>
 
-<a asp-action="Index">Back</a>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.group').forEach((card, i) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                card.style.transition = `all 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${i * 80}ms`;
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 200);
+        });
+    });
+</script>
